@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer Connect | Registration & Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e0f7ff 0%, #a6d5ff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 900px;
+            min-height: 550px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            text-align: center;
+            padding: 25px 0;
+            background: linear-gradient(to right, #4a9fff, #2e77cc);
+            color: white;
+        }
+
+        .header h1 {
+            font-weight: 600;
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .content {
+            display: flex;
+            flex: 1;
+        }
+
+        .illustration {
+            flex: 1;
+            background: linear-gradient(rgba(74, 159, 255, 0.7), rgba(46, 119, 204, 0.8));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .illustration h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .illustration p {
+            line-height: 1.6;
+            font-size: 17px;
+            max-width: 300px;
+        }
+
+        .illustration-img {
+            margin-top: 30px;
+            font-size: 150px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-container {
+            flex: 1;
+            padding: 30px;
+        }
+
+        .form-toggle {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 25px;
+        }
+
+        .toggle-btn {
+            padding: 12px 0;
+            flex: 1;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: #777;
+            transition: all 0.3s;
+        }
+
+        .toggle-btn.active {
+            color: #4a9fff;
+            border-bottom: 3px solid #4a9fff;
+        }
+
+        .form {
+            display: none;
+        }
+
+        .form.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            color: #777;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: #4a9fff;
+            box-shadow: 0 0 0 2px rgba(74, 159, 255, 0.2);
+            outline: none;
+        }
+
+        .terms {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .terms input {
+            margin-right: 10px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to right, #4a9fff, #2e77cc);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 159, 255, 0.4);
+        }
+
+        .social-login {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .social-login p {
+            margin-bottom: 15px;
+            color: #777;
+            position: relative;
+        }
+
+        .social-login p::before,
+        .social-login p::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 1px;
+            background-color: #ddd;
+        }
+
+        .social-login p::before {
+            left: 0;
+        }
+
+        .social-login p::after {
+            right: 0;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .facebook { background-color: #3b5998; }
+        .google { background-color: #dd4b39; }
+        .twitter { background-color: #1da1f2; }
+
+        .social-icons a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .illustration {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Volunteer Connect</h1>
+            <p>Join us in making a difference in our community</p>
+        </div>
+        
+        <div class="content">
+            <div class="illustration">
+                <h2>Make an Impact</h2>
+                <p>Join thousands of volunteers who are making a difference in their communities every day. Your time and skills can change lives.</p>
+                <div class="illustration-img">
+                    <i class="fas fa-hands-helping"></i>
+                </div>
+            </div>
+            
+            <div class="form-container">
+                <div class="form-toggle">
+                    <div class="toggle-btn active" data-form="login">Login</div>
+                    <div class="toggle-btn" data-form="register">Register</div>
+                </div>
+                
+                <form id="login-form" class="form active">
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" placeholder="Email Address" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" placeholder="Password" required>
+                    </div>
+                    
+                    <button type="submit" class="btn">Login</button>
+                    
+                    <div class="social-login">
+                        <p>Or login with</p>
+                        <div class="social-icons">
+                            <a href="https://facebook.com" class="facebook" target="_blank">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="https://accounts.google.com" class="google" target="_blank">
+                                <i class="fab fa-google"></i>
+                            </a>
+                            <a href="https://twitter.com" class="twitter" target="_blank">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </div>
+                    </div>
+                </form>
+                
+                <form id="register-form" class="form">
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" placeholder="Full Name" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" placeholder="Email Address" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" placeholder="Password" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-phone"></i>
+                        <input type="tel" placeholder="Phone Number">
+                    </div>
+                    
+                    <div class="terms">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">I agree to the Terms & Conditions</label>
+                    </div>
+                    
+                    <button type="submit" class="btn">Register as Volunteer</button>
+                    
+                    <div class="social-login">
+                        <p>Or register with</p>
+                        <div class="social-icons">
+                            <a href="https://facebook.com" class="facebook" target="_blank">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="https://accounts.google.com" class="google" target="_blank">
+                                <i class="fab fa-google"></i>
+                            </a>
+                            <a href="https://twitter.com" class="twitter" target="_blank">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleButtons = document.querySelectorAll('.toggle-btn');
+            const forms = document.querySelectorAll('.form');
+            
+            toggleButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const formToShow = this.getAttribute('data-form');
+                    
+                    // Update active toggle button
+                    toggleButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show the selected form
+                    forms.forEach(form => {
+                        form.classList.remove('active');
+                        if (form.id === `${formToShow}-form`) {
+                            form.classList.add('active');
+                        }
+                    });
+                });
+            });
+            
+            // Form validation
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Login successful! Redirecting to your dashboard...');
+                // Here you would typically process the login
+            });
+            
+            registerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for registering as a volunteer! We will contact you soon.');
+                // Here you would typically process the registration
+            });
+        });
+    </script>
+</body>
+</html>
